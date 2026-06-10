@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MaaCare AI - Patient Reminder Dashboard</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600&amp;family=Public+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-container": "#dcf8ff",
+                    "on-secondary": "#ffffff",
+                    "primary-container": "#0d7a8a",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "on-primary-fixed": "#001f25",
+                    "outline-variant": "#bec8cb",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-surface-variant": "#3e484b",
+                    "error-container": "#ffdad6",
+                    "surface-tint": "#006876",
+                    "surface-container-highest": "#d9e3f4",
+                    "background": "#f8f9ff",
+                    "on-tertiary-container": "#ccffe2",
+                    "error": "#ba1a1a",
+                    "on-surface": "#121c28",
+                    "tertiary-container": "#007f57",
+                    "secondary-fixed": "#ffddb8",
+                    "secondary-container": "#fea619",
+                    "on-secondary-fixed": "#2a1700",
+                    "on-primary-fixed-variant": "#004e5a",
+                    "primary-fixed": "#a1efff",
+                    "tertiary": "#006443",
+                    "primary": "#00606d",
+                    "surface-dim": "#d1dbec",
+                    "surface-bright": "#f8f9ff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-secondary-container": "#684000",
+                    "on-primary": "#ffffff",
+                    "outline": "#6e797b",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "surface-container-high": "#dfe9fa",
+                    "inverse-on-surface": "#eaf1ff",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "surface-container-lowest": "#ffffff",
+                    "on-background": "#121c28",
+                    "surface-variant": "#d9e3f4",
+                    "primary-fixed-dim": "#7dd3e5",
+                    "secondary": "#855300",
+                    "surface-container-low": "#eef4ff",
+                    "on-error-container": "#93000a",
+                    "surface-container": "#e5eeff",
+                    "surface": "#f8f9ff",
+                    "inverse-surface": "#27313e",
+                    "on-tertiary-fixed": "#002113",
+                    "inverse-primary": "#7dd3e5",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-gap-md": "16px",
+                    "stack-gap-sm": "8px",
+                    "touch-target-min": "48px",
+                    "stack-gap-lg": "24px",
+                    "container-margin": "20px"
+            },
+            "fontFamily": {
+                    "label-lg": ["Public Sans"],
+                    "headline-lg": ["Public Sans"],
+                    "headline-md": ["Public Sans"],
+                    "headline-lg-mobile": ["Public Sans"],
+                    "body-lg": ["Atkinson Hyperlegible Next"],
+                    "callout": ["Atkinson Hyperlegible Next"],
+                    "body-md": ["Atkinson Hyperlegible Next"]
+            },
+            "fontSize": {
+                    "label-lg": ["16px", {"lineHeight": "20px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "400"}],
+                    "callout": ["22px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-md": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        
+        .pulse-animation {
+            animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 0; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+
+        .active-scale:active {
+            transform: scale(0.95);
+            transition: transform 0.1s;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+
+<!-- MaaCare Demo Navigation: added to connect the Stitch screens -->
+<style>
+  .maacare-demo-nav{position:fixed;top:0;left:0;right:0;z-index:99999;background:#f9fbff;border-bottom:1px solid #d7e3f8;box-shadow:0 3px 12px rgba(0,0,0,.08);font-family:Arial, sans-serif;padding:9px 14px;display:flex;gap:10px;align-items:center;overflow-x:auto}
+  .maacare-demo-nav b{white-space:nowrap;color:#12315b;margin-right:4px;font-size:14px}
+  .maacare-demo-nav a{white-space:nowrap;text-decoration:none;background:#e8f1ff;color:#174ea6;border:1px solid #bad3ff;padding:7px 11px;border-radius:999px;font-size:13px;font-weight:700}
+  .maacare-demo-nav a:hover{background:#d7e8ff}
+  .maacare-demo-spacer{height:54px}
+  @media(max-width:700px){.maacare-demo-nav{padding:7px 8px}.maacare-demo-nav a{font-size:12px;padding:6px 8px}.maacare-demo-spacer{height:52px}}
+</style>
+<div class="maacare-demo-nav">
+  <b>MaaCare Demo Flow:</b>
+  <a href="index.html">Home</a>
+  <a href="upload.html">Upload Prescription</a>
+  <a href="plan.html">Medicine Plan</a>
+  <a href="reminders.html">Reminders</a>
+  <a href="caregiver.html">Family Alert</a>
+  <a href="doctor.html">Doctor Summary</a>
+</div>
+<div class="maacare-demo-spacer"></div>
+<script>
+(function(){
+  const routes = [
+    {keys:['upload prescription','upload'], url:'upload.html'},
+    {keys:['view medicine schedule','medicine schedule','medicine plan','plan'], url:'plan.html'},
+    {keys:['create reminders','reminders','reminder'], url:'reminders.html'},
+    {keys:['family dashboard','care','caregiver','set alerts','alert'], url:'caregiver.html'},
+    {keys:['doctor summary','summary','report','download report','share with doctor'], url:'doctor.html'},
+    {keys:['home','dashboard'], url:'index.html'}
+  ];
+  function routeFor(text){
+    text=(text||'').toLowerCase().replace(/\s+/g,' ').trim();
+    for(const r of routes){ for(const k of r.keys){ if(text.includes(k)) return r.url; } }
+    return null;
+  }
+  document.querySelectorAll('a').forEach(a=>{
+    const t=a.innerText || a.textContent || '';
+    const u=routeFor(t);
+    if((!a.getAttribute('href') || a.getAttribute('href')==='#') && u) a.setAttribute('href',u);
+  });
+  document.querySelectorAll('button').forEach(btn=>{
+    const t=btn.innerText || btn.textContent || '';
+    const u=routeFor(t);
+    if(u){ btn.style.cursor='pointer'; btn.addEventListener('click',()=>{ window.location.href=u; }); }
+  });
+})();
+</script>
+
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-margin py-4 bg-surface dark:bg-inverse-surface shadow-sm">
+<div class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary dark:text-inverse-primary">MaaCare AI</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary dark:text-inverse-primary text-3xl hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors p-2 rounded-full">mic</button>
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary-container">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A portrait of an elderly Indian man with a kind smile and spectacles, wearing a traditional light-colored kurta. The lighting is warm and natural, creating a trustworthy and serene mood. The background is a soft, out-of-focus indoor domestic setting with traditional wooden furniture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8SPprpv9x8COFOSUTw57lrjUO0KyIxgk21ZoDAR1ZLm_NDy_EgCbo13O6I_4xnE8NR48iErrMsYCrDDrPQRGVobDpIdyq4nmot0RHBy5yO6dsXxAQC1Vfx9FnpIMH310qw4FOoHM2vY1d_NrD97X9Az0Hqkk7pr6w1T0TDcbJrSo78kFQLdQoeWnOmBWu6acLGKbJcnMQtulH5lxWwaS8r_W66Yk-gGNN140riInFwaBzH1YaQNF2q44Hu-FrXsb6GYngbCi8h70"/>
+</div>
+</div>
+</header>
+<main class="mt-24 px-container-margin max-w-2xl mx-auto">
+<!-- Next Dose Focus Area -->
+<section class="mb-stack-gap-lg">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 shadow-sm">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-tertiary text-4xl" style="font-variation-settings: 'FILL' 1;">pill</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Next Dose</h2>
+</div>
+<div class="bg-surface-container rounded-xl p-8 mb-6 text-center border-2 border-primary-container">
+<p class="font-label-lg text-label-lg text-primary uppercase tracking-widest mb-2">Scheduled for 10:30 AM</p>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg font-extrabold text-on-surface mb-2">Metformin 500mg</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant italic">Take with food</p>
+</div>
+<!-- Primary Action Cluster -->
+<div class="grid grid-cols-1 gap-4">
+<!-- Taken Button -->
+<button class="active-scale flex items-center justify-center gap-4 w-full h-[84px] bg-tertiary-container text-on-tertiary-container rounded-2xl shadow-md border-b-4 border-tertiary">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-headline-md text-headline-md">Taken</span>
+</button>
+<!-- Row for others -->
+<div class="grid grid-cols-2 gap-4">
+<!-- Skipped Button -->
+<button class="active-scale flex flex-col items-center justify-center gap-2 h-[120px] bg-error-container text-on-error-container rounded-2xl shadow-md border-b-4 border-error">
+<span class="material-symbols-outlined text-4xl">cancel</span>
+<span class="font-label-lg text-label-lg">Skipped</span>
+</button>
+<!-- Remind Later -->
+<button class="active-scale flex flex-col items-center justify-center gap-2 h-[120px] bg-secondary-container text-on-secondary-container rounded-2xl shadow-md border-b-4 border-secondary">
+<span class="material-symbols-outlined text-4xl">alarm_add</span>
+<span class="font-label-lg text-label-lg text-center leading-tight">Remind<br/>Later</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Contextual Voice Assistant -->
+<section class="mb-stack-gap-lg">
+<div class="relative bg-primary text-on-primary rounded-2xl p-6 flex items-center justify-between overflow-hidden">
+<div class="z-10">
+<p class="font-callout text-callout mb-1">Need help?</p>
+<p class="font-body-md text-body-md opacity-90">Say "I've taken my medicine"</p>
+</div>
+<div class="relative z-10">
+<div class="absolute -inset-4 bg-secondary rounded-full opacity-30 pulse-animation"></div>
+<button class="w-16 h-16 bg-secondary text-on-secondary-container rounded-full flex items-center justify-center shadow-lg active-scale">
+<span class="material-symbols-outlined text-4xl">mic</span>
+</button>
+</div>
+<!-- Subtle background design -->
+<div class="absolute right-0 top-0 w-32 h-32 bg-primary-fixed-dim opacity-10 rounded-full -mr-16 -mt-16"></div>
+</div>
+</section>
+<!-- Upcoming List (Minimal for focus) -->
+<section class="mb-stack-gap-lg">
+<h3 class="font-label-lg text-label-lg text-on-surface-variant mb-4 px-2">Later Today</h3>
+<div class="space-y-4">
+<div class="bg-surface border border-outline-variant rounded-xl p-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">light_mode</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Multivitamin</p>
+<p class="font-body-md text-body-md text-on-surface-variant">01:00 PM • After Lunch</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<div class="bg-surface border border-outline-variant rounded-xl p-4 flex items-center justify-between opacity-70">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">dark_mode</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Atorvastatin</p>
+<p class="font-body-md text-body-md text-on-surface-variant">09:00 PM • Before Bed</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-surface-container docked full-width bottom-0 rounded-t-xl shadow-lg border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-2 hover:text-primary transition-colors active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-lg text-label-lg">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-2 hover:text-primary transition-colors active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">pill</span>
+<span class="font-label-lg text-label-lg">Plan</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-2 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">alarm</span>
+<span class="font-label-lg text-label-lg">Reminders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-2 hover:text-primary transition-colors active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-lg text-label-lg">Care</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for the voice button
+        const voiceBtn = document.querySelector('.bg-secondary.rounded-full');
+        if (voiceBtn) {
+            voiceBtn.addEventListener('click', () => {
+                const icon = voiceBtn.querySelector('.material-symbols-outlined');
+                icon.innerText = 'graphic_eq';
+                setTimeout(() => {
+                    icon.innerText = 'mic';
+                }, 3000);
+            });
+        }
+
+        // Logic to handle Taken/Skipped feedback
+        document.querySelectorAll('button.active-scale').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const label = this.querySelector('span:last-child').innerText;
+                if(label === "Taken") {
+                    this.parentElement.innerHTML = `
+                        <div class="col-span-full bg-tertiary text-on-tertiary rounded-2xl p-6 text-center animate-bounce">
+                            <span class="material-symbols-outlined text-5xl mb-2">check_circle</span>
+                            <p class="font-headline-md text-headline-md">Great job! All set.</p>
+                        </div>
+                    `;
+                }
+            });
+        });
+    </script>
+</body></html>
