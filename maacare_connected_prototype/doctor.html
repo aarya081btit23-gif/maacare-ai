@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Doctor Summary Report | MaaCare AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Atkinson+Hyperlegible+Next:wght@400;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@100..900&family=Public+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-container": "#dcf8ff",
+                    "on-secondary": "#ffffff",
+                    "primary-container": "#0d7a8a",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "on-primary-fixed": "#001f25",
+                    "outline-variant": "#bec8cb",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-surface-variant": "#3e484b",
+                    "error-container": "#ffdad6",
+                    "surface-tint": "#006876",
+                    "surface-container-highest": "#d9e3f4",
+                    "background": "#f8f9ff",
+                    "on-tertiary-container": "#ccffe2",
+                    "error": "#ba1a1a",
+                    "on-surface": "#121c28",
+                    "tertiary-container": "#007f57",
+                    "secondary-fixed": "#ffddb8",
+                    "secondary-container": "#fea619",
+                    "on-secondary-fixed": "#2a1700",
+                    "on-primary-fixed-variant": "#004e5a",
+                    "primary-fixed": "#a1efff",
+                    "tertiary": "#006443",
+                    "primary": "#00606d",
+                    "surface-dim": "#d1dbec",
+                    "surface-bright": "#f8f9ff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-secondary-container": "#684000",
+                    "on-primary": "#ffffff",
+                    "outline": "#6e797b",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "surface-container-high": "#dfe9fa",
+                    "inverse-on-surface": "#eaf1ff",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "surface-container-lowest": "#ffffff",
+                    "on-background": "#121c28",
+                    "surface-variant": "#d9e3f4",
+                    "primary-fixed-dim": "#7dd3e5",
+                    "secondary": "#855300",
+                    "surface-container-low": "#eef4ff",
+                    "on-error-container": "#93000a",
+                    "surface-container": "#e5eeff",
+                    "surface": "#f8f9ff",
+                    "inverse-surface": "#27313e",
+                    "on-tertiary-fixed": "#002113",
+                    "inverse-primary": "#7dd3e5",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-gap-md": "16px",
+                    "stack-gap-sm": "8px",
+                    "touch-target-min": "48px",
+                    "stack-gap-lg": "24px",
+                    "container-margin": "20px"
+            },
+            "fontFamily": {
+                    "label-lg": ["Public Sans"],
+                    "headline-lg": ["Public Sans"],
+                    "headline-md": ["Public Sans"],
+                    "headline-lg-mobile": ["Public Sans"],
+                    "body-lg": ["Atkinson Hyperlegible Next"],
+                    "callout": ["Atkinson Hyperlegible Next"],
+                    "body-md": ["Atkinson Hyperlegible Next"]
+            },
+            "fontSize": {
+                    "label-lg": ["16px", {"lineHeight": "20px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "400"}],
+                    "callout": ["22px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-md": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #f8f9ff;
+            color: #121c28;
+            -webkit-font-smoothing: antialiased;
+        }
+        .trend-line-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 3s linear forwards;
+        }
+        @keyframes dash {
+            to { stroke-dashoffset: 0; }
+        }
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md">
+
+<!-- MaaCare Demo Navigation: added to connect the Stitch screens -->
+<style>
+  .maacare-demo-nav{position:fixed;top:0;left:0;right:0;z-index:99999;background:#f9fbff;border-bottom:1px solid #d7e3f8;box-shadow:0 3px 12px rgba(0,0,0,.08);font-family:Arial, sans-serif;padding:9px 14px;display:flex;gap:10px;align-items:center;overflow-x:auto}
+  .maacare-demo-nav b{white-space:nowrap;color:#12315b;margin-right:4px;font-size:14px}
+  .maacare-demo-nav a{white-space:nowrap;text-decoration:none;background:#e8f1ff;color:#174ea6;border:1px solid #bad3ff;padding:7px 11px;border-radius:999px;font-size:13px;font-weight:700}
+  .maacare-demo-nav a:hover{background:#d7e8ff}
+  .maacare-demo-spacer{height:54px}
+  @media(max-width:700px){.maacare-demo-nav{padding:7px 8px}.maacare-demo-nav a{font-size:12px;padding:6px 8px}.maacare-demo-spacer{height:52px}}
+</style>
+<div class="maacare-demo-nav">
+  <b>MaaCare Demo Flow:</b>
+  <a href="index.html">Home</a>
+  <a href="upload.html">Upload Prescription</a>
+  <a href="plan.html">Medicine Plan</a>
+  <a href="reminders.html">Reminders</a>
+  <a href="caregiver.html">Family Alert</a>
+  <a href="doctor.html">Doctor Summary</a>
+</div>
+<div class="maacare-demo-spacer"></div>
+<script>
+(function(){
+  const routes = [
+    {keys:['upload prescription','upload'], url:'upload.html'},
+    {keys:['view medicine schedule','medicine schedule','medicine plan','plan'], url:'plan.html'},
+    {keys:['create reminders','reminders','reminder'], url:'reminders.html'},
+    {keys:['family dashboard','care','caregiver','set alerts','alert'], url:'caregiver.html'},
+    {keys:['doctor summary','summary','report','download report','share with doctor'], url:'doctor.html'},
+    {keys:['home','dashboard'], url:'index.html'}
+  ];
+  function routeFor(text){
+    text=(text||'').toLowerCase().replace(/\s+/g,' ').trim();
+    for(const r of routes){ for(const k of r.keys){ if(text.includes(k)) return r.url; } }
+    return null;
+  }
+  document.querySelectorAll('a').forEach(a=>{
+    const t=a.innerText || a.textContent || '';
+    const u=routeFor(t);
+    if((!a.getAttribute('href') || a.getAttribute('href')==='#') && u) a.setAttribute('href',u);
+  });
+  document.querySelectorAll('button').forEach(btn=>{
+    const t=btn.innerText || btn.textContent || '';
+    const u=routeFor(t);
+    if(u){ btn.style.cursor='pointer'; btn.addEventListener('click',()=>{ window.location.href=u; }); }
+  });
+})();
+</script>
+
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-margin py-4 bg-surface dark:bg-inverse-surface shadow-sm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-inverse-primary" style="font-size: 32px;">analytics</span>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg font-bold text-primary dark:text-inverse-primary">MaaCare AI</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">mic</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary">
+<img alt="Doctor profile" data-alt="A professional close-up portrait of a female doctor of Indian descent in a white clinical coat, smiling warmly in a brightly lit modern hospital corridor. The lighting is soft and natural, emphasizing a trustworthy and nurturing professional aesthetic. The color palette includes sterile whites, soft teals, and professional blues, ensuring a high-clarity, high-trust visual for an elder-care application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBz_BvcY-cxuIwxnctJ3cxKwDIq2eStnMJGzggy44zY_jliJ8hjupdg9gsXhrtTlRJIYJq3cAeOLE93YOwPHcsJfN86KvtVxPatJPlLIt9zJDabmXbOQh4kB0b7i8UZENgOJgKVWx97wiLn89sDlmLPrlUmCPLRdkeOgBYD_KYCsVclGLpbV7qbyKJIhKWsfLZtgsLMnZ7iwIMVjc3piZ_U4gKWKg5syJNpQqM1xsPBzg8oJG-VILDJdRGvfknCFvC6Zd_32wxAbw"/>
+</div>
+</div>
+</header>
+<main class="mt-24 mb-32 px-container-margin max-w-6xl mx-auto">
+<!-- Patient Overview Header -->
+<section class="mb-stack-gap-lg bg-surface-container-lowest p-6 rounded-xl border border-outline-variant flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="font-headline-md text-headline-md">RS</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Rajesh Sharma</h2>
+<p class="text-on-surface-variant">Age: 72 | Case ID: #MC-9921 | Hypertension & Type 2 Diabetes</p>
+</div>
+</div>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-tertiary-container text-on-tertiary-container rounded-full text-sm font-bold">Stable Trend</span>
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-sm font-bold">Review Required</span>
+</div>
+</section>
+<!-- Main Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-stack-gap-lg">
+<!-- Weekly Adherence Trends (Large Area) -->
+<div class="md:col-span-8 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-headline-md text-on-surface">Weekly Adherence Trends</h3>
+<div class="flex items-center gap-2 text-on-surface-variant text-sm">
+<span class="w-3 h-3 bg-primary rounded-full"></span> Taken
+                        <span class="w-3 h-3 bg-error rounded-full ml-2"></span> Missed
+                    </div>
+</div>
+<div class="relative h-64 w-full">
+<!-- SVG Chart -->
+<svg class="w-full h-full overflow-visible" viewbox="0 0 700 200">
+<!-- Grid Lines -->
+<line stroke="#E5E7EB" stroke-width="1" x1="0" x2="700" y1="0" y2="0"></line>
+<line stroke="#E5E7EB" stroke-width="1" x1="0" x2="700" y1="50" y2="50"></line>
+<line stroke="#E5E7EB" stroke-width="1" x1="0" x2="700" y1="100" y2="100"></line>
+<line stroke="#E5E7EB" stroke-width="1" x1="0" x2="700" y1="150" y2="150"></line>
+<line stroke="#E5E7EB" stroke-width="1" x1="0" x2="700" y1="200" y2="200"></line>
+<!-- Trend Line -->
+<path class="trend-line-path" d="M0,50 L100,60 L200,40 L300,80 L400,30 L500,50 L600,45 L700,55" fill="none" stroke="#00606d" stroke-linecap="round" stroke-width="4"></path>
+<!-- Data Points -->
+<circle cx="0" cy="50" fill="#00606d" r="5"></circle>
+<circle cx="100" cy="60" fill="#00606d" r="5"></circle>
+<circle cx="200" cy="40" fill="#00606d" r="5"></circle>
+<circle cx="300" cy="80" fill="#ba1a1a" r="8"></circle> <!-- Missed alert -->
+<circle cx="400" cy="30" fill="#00606d" r="5"></circle>
+<circle cx="500" cy="50" fill="#00606d" r="5"></circle>
+<circle cx="600" cy="45" fill="#00606d" r="5"></circle>
+<circle cx="700" cy="55" fill="#00606d" r="5"></circle>
+</svg>
+<!-- Labels -->
+<div class="flex justify-between mt-4 text-on-surface-variant font-label-lg">
+<span>Mon</span><span>Tue</span><span>Wed</span><span class="text-error font-bold">Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+</div>
+</div>
+<div class="mt-8 grid grid-cols-3 gap-4 border-t border-outline-variant pt-6">
+<div class="text-center">
+<p class="text-on-surface-variant font-label-lg">Overall Rate</p>
+<p class="font-headline-md text-headline-md text-primary">94%</p>
+</div>
+<div class="text-center border-x border-outline-variant">
+<p class="text-on-surface-variant font-label-lg">Missed Doses</p>
+<p class="font-headline-md text-headline-md text-error">2</p>
+</div>
+<div class="text-center">
+<p class="text-on-surface-variant font-label-lg">Late Doses</p>
+<p class="font-headline-md text-headline-md text-secondary">3</p>
+</div>
+</div>
+</div>
+<!-- Missed Medications (Compact List) -->
+<div class="md:col-span-4 space-y-stack-gap-lg">
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm h-full">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-error">warning</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Missed Doses</h3>
+</div>
+<div class="space-y-4">
+<!-- Missed Med Card -->
+<div class="p-4 rounded-lg bg-error-container border-l-4 border-error">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-lg text-on-error-container">Metformin 500mg</p>
+<p class="text-sm text-on-error-container opacity-80">Thursday Evening • 8:00 PM</p>
+</div>
+</div>
+</div>
+<div class="p-4 rounded-lg bg-error-container border-l-4 border-error">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-lg text-on-error-container">Amlodipine 5mg</p>
+<p class="text-sm text-on-error-container opacity-80">Wednesday Morning • 9:00 AM</p>
+</div>
+</div>
+</div>
+<button class="w-full py-3 text-primary font-bold hover:underline">View Historical Gaps →</button>
+</div>
+</div>
+</div>
+<!-- Patient Voice Section (Symptom Logs) -->
+<div class="md:col-span-12 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">record_voice_over</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Patient Voice: Reported Symptoms</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-stack-gap-lg">
+<!-- Symptom Card 1 -->
+<div class="bg-surface p-5 rounded-xl border border-outline-variant hover:border-primary transition-all">
+<div class="flex justify-between mb-3">
+<span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded text-xs font-bold">NEW REPORT</span>
+<span class="text-on-surface-variant text-xs">Today, 10:15 AM</span>
+</div>
+<p class="italic text-on-surface font-body-lg mb-3">"Feeling dizzy after evening dose of the blood pressure medicine."</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-on-surface-variant">schedule</span>
+<span class="text-xs text-on-surface-variant">Occurred: 30 mins after dose</span>
+</div>
+</div>
+<!-- Symptom Card 2 -->
+<div class="bg-surface p-5 rounded-xl border border-outline-variant hover:border-primary transition-all">
+<div class="flex justify-between mb-3">
+<span class="bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded text-xs font-bold">LOGGED</span>
+<span class="text-on-surface-variant text-xs">Yesterday, 4:30 PM</span>
+</div>
+<p class="italic text-on-surface font-body-lg mb-3">"Slight swelling in the ankles noticed after the morning walk."</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-on-surface-variant">info</span>
+<span class="text-xs text-on-surface-variant">Severity: Low</span>
+</div>
+</div>
+<!-- Symptom Card 3 -->
+<div class="bg-primary-container/10 p-5 rounded-xl border border-primary/20 flex flex-col justify-center items-center text-center">
+<span class="material-symbols-outlined text-primary mb-2" style="font-size: 32px;">add_notes</span>
+<p class="font-label-lg text-primary">Inquire during consultation</p>
+<p class="text-xs text-on-surface-variant mt-1">AI detected 2 similar reports in last 14 days</p>
+</div>
+</div>
+</div>
+<!-- Action Section -->
+<div class="md:col-span-12 flex flex-col md:flex-row gap-4 pt-6">
+<button class="flex-1 bg-primary text-on-primary py-4 rounded-xl font-headline-md text-headline-md flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all">
+<span class="material-symbols-outlined">print</span>
+                    Generate Clinical Report
+                </button>
+<button class="flex-1 bg-secondary text-on-secondary py-4 rounded-xl font-headline-md text-headline-md flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all">
+<span class="material-symbols-outlined">edit_note</span>
+                    Update Medication Plan
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-surface-container border-t border-outline-variant rounded-t-xl shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-2 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-lg text-label-lg">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-2 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">pill</span>
+<span class="font-label-lg text-label-lg">Plan</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-2 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">alarm</span>
+<span class="font-label-lg text-label-lg">Reminders</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-2" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-label-lg text-label-lg">Care</span>
+</a>
+</nav>
+<!-- Contextual FAB for Doctor Review -->
+<button class="fixed bottom-24 right-6 w-16 h-16 bg-secondary-container text-on-secondary-container rounded-full shadow-2xl flex items-center justify-center active:scale-90 transition-transform z-40">
+<span class="material-symbols-outlined" style="font-size: 32px; font-variation-settings: 'FILL' 1;">mic</span>
+<span class="absolute inset-0 rounded-full border-4 border-secondary-container animate-ping opacity-25"></span>
+</button>
+<script>
+        // Subtle micro-interaction for cards
+        document.querySelectorAll('.rounded-xl').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                if (!card.classList.contains('bg-primary')) {
+                    card.style.transform = 'translateY(-2px)';
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0px)';
+            });
+        });
+    </script>
+</body></html>
